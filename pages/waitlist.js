@@ -5,6 +5,7 @@ import CustomLogo from '../src/components/logo/CustomLogo';
 import { useGetConfigData } from '../src/api-manage/hooks/useGetConfigData';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
+import { Typography, Box, Stack, Button } from '@mui/material';
 
 export default function Waitlist() {
   const [timeLeft, setTimeLeft] = useState({
@@ -20,6 +21,29 @@ export default function Waitlist() {
   
   const router = useRouter();
   const { data: configData } = useGetConfigData();
+
+  // Prevent mobile zoom on input focus
+  useEffect(() => {
+    const handleFocus = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') {
+        e.target.style.fontSize = '16px'; // Prevents zoom on iOS
+      }
+    };
+
+    const handleBlur = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') {
+        e.target.style.fontSize = ''; // Reset to original
+      }
+    };
+
+    document.addEventListener('focus', handleFocus, true);
+    document.addEventListener('blur', handleBlur, true);
+
+    return () => {
+      document.removeEventListener('focus', handleFocus, true);
+      document.removeEventListener('blur', handleBlur, true);
+    };
+  }, []);
 
   useEffect(() => {
     const launchDate = new Date('March 1, 2025 00:00:00').getTime();
@@ -107,7 +131,7 @@ export default function Waitlist() {
       
       emailBody += `\nSubmitted at: ${new Date().toLocaleString()}`;
       
-      const mailtoLink = `mailto:obafemisope438@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      const mailtoLink = `mailto:hello@rine.africa?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
       
       window.location.href = mailtoLink;
       
@@ -145,179 +169,144 @@ export default function Waitlist() {
           margin: 'auto',
           padding: '40px 20px 80px'
         }}>
-          <header style={{ textAlign: 'center', marginBottom: '40px' }}>
-            {/* Replace src with actual logo path if needed */}
-           <div style={{ display: "flex", marginBottom: '3rem', justifyContent: "center" }}>
-            <CustomLogo
-              logoImg="/Rine_logo.png"
-              atlText="Rine Logo"
-              width="120px"
-              height="40px"
-            />
-            </div>
-            <h1 style={{ 
-              color: '#551377', 
-              fontSize: '42px', 
-              marginBottom: '10px',
-              margin: 0
-            }}>
-              Rine is launching soon
-            </h1>
-            <p style={{
-              fontSize: '18px',
-              maxWidth: '700px',
-              margin: '0 auto 30px'
-            }}>
-              A unified commerce platform connecting customers, vendors and riders.
-              Join the waitlist and be part of day one.
-            </p>
-          </header>
+       <Box
+  component="header"
+  sx={{
+    textAlign: 'center',
+    mb: { xs: 4, md: 5 }, // responsive margin-bottom
+  }}
+>
+  {/* Logo */}
+  <Box
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      mb: { xs: 2, md: 4 }, // responsive margin-bottom
+    }}
+  >
+    <CustomLogo
+      logoImg="/Rine_logo.png"
+      atlText="Rine Logo"
+      width="120px"
+      height="40px"
+    />
+  </Box>
 
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '20px',
-            marginBottom: '50px'
-          }}>
-            <div style={{
-              background: 'white',
-              borderRadius: '12px',
-              padding: '15px 20px',
-              minWidth: '90px',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.06)'
-            }}>
-              <h2 style={{ 
-                margin: 0, 
-                fontSize: '32px', 
-                color: '#551377' 
-              }}>
-                {timeLeft.days}
-              </h2>
-              <span style={{ 
-                fontSize: '12px', 
-                textTransform: 'uppercase', 
-                color: '#777' 
-              }}>
-                Days
-              </span>
-            </div>
-            <div style={{
-              background: 'white',
-              borderRadius: '12px',
-              padding: '15px 20px',
-              minWidth: '90px',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.06)'
-            }}>
-              <h2 style={{ 
-                margin: 0, 
-                fontSize: '32px', 
-                color: '#551377' 
-              }}>
-                {timeLeft.hours}
-              </h2>
-              <span style={{ 
-                fontSize: '12px', 
-                textTransform: 'uppercase', 
-                color: '#777' 
-              }}>
-                Hours
-              </span>
-            </div>
-            <div style={{
-              background: 'white',
-              borderRadius: '12px',
-              padding: '15px 20px',
-              minWidth: '90px',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.06)'
-            }}>
-              <h2 style={{ 
-                margin: 0, 
-                fontSize: '32px', 
-                color: '#551377' 
-              }}>
-                {timeLeft.minutes}
-              </h2>
-              <span style={{ 
-                fontSize: '12px', 
-                textTransform: 'uppercase', 
-                color: '#777' 
-              }}>
-                Minutes
-              </span>
-            </div>
-            <div style={{
-              background: 'white',
-              borderRadius: '12px',
-              padding: '15px 20px',
-              minWidth: '90px',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.06)'
-            }}>
-              <h2 style={{ 
-                margin: 0, 
-                fontSize: '32px', 
-                color: '#551377' 
-              }}>
-                {timeLeft.seconds}
-              </h2>
-              <span style={{ 
-                fontSize: '12px', 
-                textTransform: 'uppercase', 
-                color: '#777' 
-              }}>
-                Seconds
-              </span>
-            </div>
-          </div>
+  {/* Main Heading */}
+  <Typography
+    variant="h1"
+    sx={{
+      color: '#551377',
+      fontWeight: 'bold',
+      mb: 2,
+      m: 0,
+      fontSize: { xs: '28px', sm: '36px', md: '42px' }, // responsive font size
+      lineHeight: 1.2,
+    }}
+  >
+    Rine is launching soon
+  </Typography>
 
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '10px',
-            marginBottom: '30px'
-          }}>
-            <div
-              onClick={() => handleTabClick('vendor')}
-              style={{
-                padding: '12px 24px',
-                borderRadius: '30px',
-                border: '2px solid #551377',
-                cursor: 'pointer',
-                background: activeTab === 'vendor' ? '#551377' : 'transparent',
-                color: activeTab === 'vendor' ? 'white' : '#551377',
-                fontWeight: '600'
-              }}
-            >
-              Vendors
-            </div>
-            <div
-              onClick={() => handleTabClick('rider')}
-              style={{
-                padding: '12px 24px',
-                borderRadius: '30px',
-                border: '2px solid #551377',
-                cursor: 'pointer',
-                background: activeTab === 'rider' ? '#551377' : 'transparent',
-                color: activeTab === 'rider' ? 'white' : '#551377',
-                fontWeight: '600'
-              }}
-            >
-              Riders
-            </div>
-            <div
-              onClick={() => handleTabClick('customer')}
-              style={{
-                padding: '12px 24px',
-                borderRadius: '30px',
-                border: '2px solid #551377',
-                cursor: 'pointer',
-                background: activeTab === 'customer' ? '#551377' : 'transparent',
-                color: activeTab === 'customer' ? 'white' : '#551377',
-                fontWeight: '600'
-              }}
-            >
-              Customers
-            </div>
-          </div>
+  {/* Subheading / description */}
+  <Typography
+    variant="body1"
+    sx={{
+      fontSize: { xs: '14px', sm: '16px', md: '18px' }, // responsive font size
+      maxWidth: '700px',
+      mx: 'auto',
+      mt: 2,
+      mb: 4,
+    }}
+  >
+    A unified commerce platform connecting customers, vendors and riders.
+    Join the waitlist and be part of day one.
+  </Typography>
+</Box>
+
+        <Box
+  sx={{
+    display: 'flex',
+    justifyContent: 'center',
+    gap: 1, // ~20px
+    mb: 6, // ~50px
+  }}
+>
+  {[
+    { value: timeLeft.days, label: 'Days' },
+    { value: timeLeft.hours, label: 'Hours' },
+    { value: timeLeft.minutes, label: 'Minutes' },
+    { value: timeLeft.seconds, label: 'Seconds' }
+  ].map((item, index) => (
+    <Box
+      key={index}
+      sx={{
+        background: 'white',
+        borderRadius: '12px',
+        px: 1, // 20px
+        py: 1.875, // 15px
+         minWidth: { xs: '60px', sm: '90px', md: '120px' },
+        boxShadow: '0 10px 25px rgba(0,0,0,0.06)',
+        textAlign: 'center',
+      }}
+    >
+      {/* Number */}
+      <Typography
+        variant="h2"
+        sx={{
+          fontSize: { xs: '24px', md: '32px' },
+          color: '#551377',
+          fontWeight: 'bold',
+          lineHeight: 1.2,
+          m: 0,
+        }}
+      >
+        {item.value}
+      </Typography>
+
+      {/* Label */}
+      <Typography
+        sx={{
+          fontSize: { xs: '8px', sm: '12px' },
+          textTransform: 'uppercase',
+          color: '#777',
+        }}
+      >
+        {item.label}
+      </Typography>
+    </Box>
+  ))}
+</Box>
+
+        <Stack
+  direction="row"
+  spacing={{ xs: 1, sm: 2 }} // gap between buttons: 8px on xs, 16px on sm+
+  justifyContent="center"
+  sx={{ mb: 4 }} // margin-bottom
+>
+  {['vendor', 'rider', 'customer'].map((tab) => (
+    <Button
+      key={tab}
+      onClick={() => handleTabClick(tab)}
+      variant={activeTab === tab ? 'contained' : 'outlined'}
+      sx={{
+        borderRadius: '30px',
+        borderColor: '#551377',
+        color: activeTab === tab ? 'white' : '#551377',
+        backgroundColor: activeTab === tab ? '#551377' : 'transparent',
+        fontWeight: 600,
+        px: { xs: 2, sm: 3 }, // horizontal padding
+        py: { xs: 1.5, sm: 1.5 }, // vertical padding
+        textTransform: 'none',
+        '&:hover': {
+          backgroundColor: activeTab === tab ? '#551377' : '#f0f0f0',
+        },
+        fontSize: { xs: '0.75rem', sm: '0.875rem' } // responsive font size
+      }}
+    >
+      {tab === 'vendor' ? 'Vendors' : tab === 'rider' ? 'Riders' : 'Customers'}
+    </Button>
+  ))}
+</Stack>
 
           <div style={{
             background: 'white',
@@ -348,7 +337,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: errors.businessName ? '1px solid #ff4444' : '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }} 
                 />
                 {errors.businessName && (
@@ -375,7 +364,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: errors.contactPerson ? '1px solid #ff4444' : '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }} 
                 />
                 {errors.contactPerson && (
@@ -403,7 +392,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: errors.email ? '1px solid #ff4444' : '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }} 
                 />
                 {errors.email && (
@@ -430,7 +419,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: errors.phone ? '1px solid #ff4444' : '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }} 
                 />
                 {errors.phone && (
@@ -456,7 +445,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }}
                 >
                   <option value="Restaurant">Restaurant</option>
@@ -507,7 +496,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: errors.fullName ? '1px solid #ff4444' : '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }} 
                 />
                 {errors.fullName && (
@@ -535,7 +524,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: errors.email ? '1px solid #ff4444' : '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }} 
                 />
                 {errors.email && (
@@ -562,7 +551,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: errors.phone ? '1px solid #ff4444' : '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }} 
                 />
                 {errors.phone && (
@@ -588,7 +577,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }}
                 >
                   <option value="Bike">Bike</option>
@@ -637,7 +626,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: errors.fullName ? '1px solid #ff4444' : '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }} 
                 />
                 {errors.fullName && (
@@ -665,7 +654,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: errors.email ? '1px solid #ff4444' : '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }} 
                 />
                 {errors.email && (
@@ -692,7 +681,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: errors.phone ? '1px solid #ff4444' : '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }} 
                 />
                 {errors.phone && (
@@ -718,7 +707,7 @@ export default function Waitlist() {
                     padding: '12px 14px',
                     borderRadius: '10px',
                     border: '1px solid #ddd',
-                    fontSize: '14px'
+                    fontSize: { xs: '16px', md: '14px' }
                   }} 
                 />
                 
@@ -747,7 +736,7 @@ export default function Waitlist() {
           <footer style={{
             textAlign: 'center',
             marginTop: '80px',
-            fontSize: '14px',
+            fontSize: { xs: '16px', md: '14px' },
             color: '#666'
           }}>
             © 2026 Rine. Powered by Gabrine Solutions.
