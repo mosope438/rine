@@ -30,6 +30,10 @@ class CustomDocument extends Document {
             async
           />
           <meta name="theme-color" content="#111827" />
+          
+          {/* Favicon */}
+          <link rel="icon" href="/rine_icon.jpg" />
+          <link rel="shortcut icon" href="/rine_icon.jpg" />
 
           {/* ✅ Analytics scripts */}
           {analyticsConfig.google_tag_manager && (
