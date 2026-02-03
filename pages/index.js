@@ -1,5 +1,5 @@
-import { LandingLayout } from "components/layout/LandingLayout";
-import LandingPage from "../src/components/landing-page";
+// import { LandingLayout } from "components/layout/LandingLayout";
+// import LandingPage from "../src/components/landing-page";
 import CssBaseline from "@mui/material/CssBaseline";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,8 @@ import Router from "next/router";
 import SEO from "../src/components/seo";
 import useGetLandingPage from "../src/api-manage/hooks/react-query/useGetLandingPage";
 import { useGetConfigData } from "../src/api-manage/hooks/useGetConfigData";
-import { RTL } from "components/rtl";
+// import { RTL } from "components/rtl";
+import NewLandingPage from "../src/components/NewLandingPage";
 
 const Root = (props) => {
 	const { configData, landingPageData } = props;
@@ -50,16 +51,18 @@ const Root = (props) => {
 				title={landingPageData?.meta_title || configData?.business_name}
 				description={landingPageData?.meta_description || configData?.meta_description}
 			/>
-			{data && (
+			{/* Old Landing Page - Commented Out */}
+			{/* {data && (
 				<LandingLayout configData={dataConfig} landingPageData={data}>
-
 					<LandingPage
 						configData={dataConfig}
 						landingPageData={data}
 					/>
-
 				</LandingLayout>
-			)}
+			)} */}
+			
+			{/* New Landing Page with Background Image */}
+			<NewLandingPage />
 		</>
 	);
 };

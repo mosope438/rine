@@ -69,19 +69,19 @@ const LandingPage = ({ configData, landingPageData }) => {
     <>
       <PushNotificationLayout>
         <HeroSection landingPageDataheroSection={landingPageData?.hero_section} />
-        {landingPageData?.trust_section?.trust_section_status === 1 ? (
+        {/* {landingPageData?.trust_section?.trust_section_status === 1 ? (
           <StatsSection trustSectionData={landingPageData?.trust_section} />
-        ) : null}
+        ) : null} */}
         {landingPageData?.available_zone_section
           ?.available_zone_status === 1 &&
           landingPageData?.available_zone_section?.available_zone_list?.length > 0 ? (
           <AvailableZoneSection zoneSection={landingPageData?.available_zone_section} />
         ) : null}
-        {Number(landingPageData?.promotional_banner_section?.promotion_banner_section_status) === 1 ? (
+        {/* {Number(landingPageData?.promotional_banner_section?.promotion_banner_section_status) === 1 ? (
           <Box sx={{ background: theme => theme.palette.neutral[100] }}>
             <Banners promotionalBanner={landingPageData?.promotional_banner_section?.promotion_banners_full_url} isSmall={isSmall} />
           </Box>
-        ) : null}
+        ) : null} */}
         {landingPageData?.user_app_download_section?.download_user_app_section_status === 1 ? (
           <Box sx={{ background: "linear-gradient(1.02deg, rgba(3, 157, 85, 0.1) -12.87%, rgba(3, 157, 85, 0.02) 99.13%)" }}>
             <ComponentTwo
@@ -91,9 +91,9 @@ const LandingPage = ({ configData, landingPageData }) => {
         ) : null}
         <Box sx={{ background: theme => theme.palette.neutral[100], pb: "2rem" }}>
           <CustomContainer>
-            {Number(landingPageData?.popular_client_section?.popular_client_section_status) === 1 && (
+            {/* {Number(landingPageData?.popular_client_section?.popular_client_section_status) === 1 && (
               <ClientSection popular_client_section={landingPageData?.popular_client_section} />
-            )}
+            )} */}
 
             {landingPageData?.seller_app_download_section?.download_seller_app_section_status === 1 ? (
               <Registration
@@ -112,7 +112,7 @@ const LandingPage = ({ configData, landingPageData }) => {
             </CustomContainer>
           </Box>
         ) : null}
-        <Box sx={{ background: theme => theme.palette.neutral[100] }}>
+        {/* <Box sx={{ background: theme => theme.palette.neutral[100] }}>
           {landingPageData?.banner_section?.banner_section_status ? (
             <DiscountBanner
               bannerImage={landingPageData?.banner_section?.banner_iamge_full_url}
@@ -123,12 +123,12 @@ const LandingPage = ({ configData, landingPageData }) => {
             <Testimonials handleOrderNow={handleOrderNow} testimonial_section={landingPageData?.testimonial_section} isSmall={isSmall} />
           ) : null}
 
-        </Box>
-        {landingPageData?.gallery_section ? (
+        </Box> */}
+        {/* {landingPageData?.gallery_section ? (
           <Box sx={{ background: "linear-gradient(1.02deg, rgba(3, 157, 85, 0.1) -12.87%, rgba(3, 157, 85, 0.02) 99.13%)" }}>
             <GallerySection gallery_section={landingPageData?.gallery_section} />
           </Box>
-        ) : null}
+        ) : null} */}
         {landingPageData?.highlight_section?.highlight_section_status === 1 ? (
           <CustomContainer>
             <ImageTitleSection highlight_section={landingPageData?.highlight_section} />
