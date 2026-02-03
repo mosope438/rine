@@ -131,7 +131,7 @@ export default function Waitlist() {
       
       emailBody += `\nSubmitted at: ${new Date().toLocaleString()}`;
       
-      const mailtoLink = `mailto:hello@rine.africa?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+      const mailtoLink = `mailto:adetoun@gabrinesolutions.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
       
       window.location.href = mailtoLink;
       
