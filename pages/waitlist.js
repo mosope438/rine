@@ -46,7 +46,7 @@ export default function Waitlist() {
   }, []);
 
   useEffect(() => {
-    const launchDate = new Date('March 1, 2025 00:00:00').getTime();
+    const launchDate = new Date('March 1, 2026 00:00:00').getTime();
 
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -122,29 +122,30 @@ export default function Waitlist() {
     setIsSubmitting(true);
     
     try {
-      const emailSubject = `New ${activeTab} waitlist submission`;
-      let emailBody = `New ${activeTab} waitlist submission:\n\n`;
-      
-      Object.entries(formData).forEach(([key, value]) => {
-        emailBody += `${key}: ${value}\n`;
+      const response = await fetch('/api/send-waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          formData: formData,
+          userType: activeTab
+        }),
       });
-      
-      emailBody += `\nSubmitted at: ${new Date().toLocaleString()}`;
-      
-      const mailtoLink = `mailto:adetoun@gabrinesolutions.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-      
-      window.location.href = mailtoLink;
-      
-      toast.success('Opening your email client...');
-      
-      setTimeout(() => {
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success('Successfully joined the waitlist!');
         setFormData({});
-        setIsSubmitting(false);
-      }, 2000);
-      
+        setErrors({});
+      } else {
+        toast.error(data.message || 'Failed to submit form');
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
       toast.error('Failed to submit form. Please try again.');
+    } finally {
       setIsSubmitting(false);
     }
   };
