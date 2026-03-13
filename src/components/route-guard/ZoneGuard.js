@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { getToken } from "helper-functions/getToken";
 
 const ZoneGuard = (props) => {
   const { children } = props;
@@ -12,7 +13,9 @@ const ZoneGuard = (props) => {
       }
       const zoneId = JSON.parse(localStorage.getItem("zoneid"));
       const location = localStorage.getItem("location");
-      if (zoneId?.length > 0 && location) {
+      const hasZone = zoneId?.length > 0 && location;
+      const isLoggedIn = !!getToken();
+      if (hasZone || isLoggedIn) {
         setChecked(true);
       } else {
         router.push("/", undefined, { shallow: true });

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomModal from "components/modal";
 import SignIn from "components/auth/sign-in";
@@ -6,6 +6,7 @@ import SignUp from "components/auth/sign-up/SignUp";
 import AddUserInfo from "components/auth/AddUserInfo";
 import ExitingUser from "components/auth/ExitingUser";
 import { useTheme } from "@mui/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useSignIn } from "api-manage/hooks/react-query/auth/useSignIn";
 import {
   onErrorResponse,
@@ -50,11 +51,24 @@ export const setUpRecaptcha = () => {
   }
 };
 
-const AuthModal = ({ modalFor, open, handleClose, setModalFor }) => {
+const AuthModal = ({ modalFor, open, handleClose, setModalFor, primaryColor }) => {
   const { configData } = useSelector((state) => state.configData);
   const [loginInfo, setLoginInfo] = useState({});
   const [userInfo, setUserInfo] = useState(null);
   const theme = useTheme();
+  const purpleTheme = useMemo(() => {
+    if (!primaryColor) return null;
+    return createTheme(theme, {
+      palette: {
+        primary: {
+          main: primaryColor,
+          light: primaryColor,
+          dark: primaryColor,
+          contrastText: "#FFFFFF",
+        },
+      },
+    });
+  }, [primaryColor, theme]);
   const { userInfo: fbUserInfo, jwtToken: fbJwtToken } = useSelector(
     (state) => state.fbCredentialsStore
   );
@@ -256,12 +270,22 @@ const AuthModal = ({ modalFor, open, handleClose, setModalFor }) => {
     }
   };
 
-  return (
-    <CustomModal handleClose={handleClose} openModal={open}>
+  const modalContent = (
+    <>
       <div ref={recaptchaWrapperRef}>
         <div id="recaptcha-container"></div>
       </div>
       {renderModalContent()}
+    </>
+  );
+
+  return (
+    <CustomModal handleClose={handleClose} openModal={open}>
+      {purpleTheme ? (
+        <ThemeProvider theme={purpleTheme}>{modalContent}</ThemeProvider>
+      ) : (
+        modalContent
+      )}
     </CustomModal>
   );
 };

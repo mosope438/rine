@@ -56,7 +56,7 @@ const TopBanner = () => {
         return parcelImage?.src;
 
       default:
-        return "inherit";
+        return banner?.src || rcommerceSearchBg?.src || "/static/landing-page/comp1.svg";
     }
   };
   // if (!moduleType) return null;

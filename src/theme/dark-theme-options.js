@@ -54,10 +54,10 @@ const primary = {
 };
 
 const secondary = {
-  main: "#10B981",
-  light: "#3FC79A",
-  dark: "#0B815A",
-  contrastText: neutral[900],
+  main: "#551377",
+  light: "#7B3FA3",
+  dark: "#441066",
+  contrastText: "#FFFFFF",
 };
 
 const success = {
